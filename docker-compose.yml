@@ -2,9 +2,29 @@ version: '3.4'
 
 services:
   dockerui:
-    image: dockerui
-    build: dockerui/.
+    image: newangular7app
+    build: angular-ui/.
     environment:
       NODE_ENV: production
     ports:
       - 80:80
+    depends_on:
+      - dockerwebapi
+      - db
+  dockerwebapi:
+    image: dotnetcoreapi
+    build: dotnetcore-webapi/.
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+  db:
+    image: 'microsoft/mssql-server-linux'
+    environment:
+      SA_PASSWORD: 'Password1'
+      ACCEPT_EULA: 'Y'
+      MSSQL_PID: 'Express'
+    ports:
+      - 1433:1433
