@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  dockerui:
+  ui:
     image: newangular7app
     build: angular-ui/.
     environment:
@@ -9,9 +9,9 @@ services:
     ports:
       - 80:80
     depends_on:
-      - dockerwebapi
+      - webapi
       - db
-  dockerwebapi:
+  webapi:
     image: dotnetcoreapi
     build: dotnetcore-webapi/.
     environment:

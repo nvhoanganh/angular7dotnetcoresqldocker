@@ -1,4 +1,6 @@
-# Dockerizing Angular 7, .NET Core Web API with EF core and SQL server using VSCODE on Windows 10 Pro
+# Angular 7, .NET Core Web API with EF core,MSSQL server, VsCode, Azure DevOps CI/CD, Azure Container Service and Google Kubernetes Engine
+
+This is a sample project showing the steps taken to develop a simple 3 tier application using Angular 7, .NET Core Web API with EF core and MSSQL server using open Open Source development tools (VsCode) using a Windows 10 Professional laptop. Azure DevOps is used to automate the CI/CD process and deploy to both Azure Kubernetes Service and Goolge Kubernetes Engine using Terraform
 
 ## Step 1: Install Docker for Windows
 1. Install Docker for Windows at [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
@@ -8,7 +10,7 @@
 1. install latest angular-cli using `npm i -g @angular/cli`
 2. create new folder called `Docker` somewhere on your computer
 3. inside `Docker` folder create new Angular App by using `ng new angular-ui` command
-5. make the sure app works by running `ng s --open` inside the `angular-ui` folder
+5. make the sure app works by running `ng s --open` inside the `angular-ui` folder by opening http://localhost:4200
 6. inside the `angular-ui` folder, add new file `nginx.conf`
    
 ```
@@ -51,12 +53,11 @@ COPY dist/angular-ui/ .
 7. create new docker image by running `docker image build . -t newangular7app` command inside of the angular-ui folder. **Note**:
    1. `.` represent the Path to the `Dockerfile`.
    2. `newangular7app` is the name and the tag of the docker image (you can change to anything you want)
-   3. you can run this command from root (`Docker` folder) by specifying the `-f` parameter: 
-    > `docker build -f angular-ui/Dockerfile angular-ui -t newangular7app`
-8. check to make sure image is create by running `docker image ls`
-9.  run the newly created image by running `docker run -d --rm -p 4200:80 newangular7app` where
-   1.  `-d` will make the container run in the background
-   2.  `--rm` will remove the container when the it stops
+   3. you can run this command from root (`Docker` folder) by specifying the `-f` parameter: `docker build -f angular-ui/Dockerfile angular-ui -t newangular7app`
+8. check to make sure image is created by running `docker image ls`
+9. run the newly created image by running `docker run -d --rm -p 4200:80 newangular7app` where
+    1. `-d` will make the container run in the background
+    2. `--rm` will remove the container when the it stops
 10. open http://localhost:4200 , you should see the Angular app is running
 11. view the running docker container by running `docker ps`
 12. stop the running container by running `docker container stop 0f` where `0f` is the first 2 characters of the Container ID (http://localhost:4200 should not stop working)
@@ -158,14 +159,14 @@ services:
 version: '3.4'
 
 services:
-  dockerui:
+  ui:
     image: newangular7app
     build: angular-ui/.
     environment:
       NODE_ENV: production
     ports:
       - 80:80
-  dockerwebapi:
+  webapi:
     image: dotnetcoreapi
     build: dotnetcore-webapi/.
     environment:
@@ -183,14 +184,14 @@ services:
 version: '3.4'
 
 services:
-  dockerui:
+  ui:
     image: newangular7app
     build: angular-ui/.
     environment:
       NODE_ENV: production
     ports:
       - 80:80
-  dockerwebapi:
+  webapi:
     image: dotnetcoreapi
     build: dotnetcore-webapi/.
     environment:
@@ -216,7 +217,7 @@ services:
 version: '3.4'
 
 services:
-  dockerui:
+  ui:
     image: newangular7app
     build: angular-ui/.
     environment:
@@ -224,9 +225,9 @@ services:
     ports:
       - 80:80
     depends_on:
-      - dockerwebapi
+      - webapi
       - db
-  dockerwebapi:
+  webapi:
     image: dotnetcoreapi
     build: dotnetcore-webapi/.
     environment:
@@ -246,3 +247,11 @@ services:
 
 ```
 2. run `docker-compose up -d` again and you should see the start up order is now SQL > WebApi > UI
+
+## Step 6: Wiring up connections between containers
+
+## Step 7: Add Kubernetes
+
+## Step 8: Automate CI/CD using Azure DevOps
+
+## Step 9: Deploy to Azure Container Service and Google Kubernetes Engine using Terraform
