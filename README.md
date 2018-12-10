@@ -1,4 +1,4 @@
-# Dockerize Angular 7, .NET Core Web API with EF core and SQL server using VSVODE on Windows 10 Pro
+# Dockerizing Angular 7, .NET Core Web API with EF core and SQL server using VSCODE on Windows 10 Pro
 
 ## Step 1: Install Docker for Windows
 1. Install Docker for Windows at [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
