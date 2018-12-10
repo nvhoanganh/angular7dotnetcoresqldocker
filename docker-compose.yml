@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  dockerui:
+    image: dockerui
+    build: dockerui/.
+    environment:
+      NODE_ENV: production
+    ports:
+      - 80:80
