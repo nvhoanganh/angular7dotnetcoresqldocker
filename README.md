@@ -11,7 +11,7 @@
 5. make the sure app works by running `ng s --open` inside the `angular-ui` folder
 6. inside the `angular-ui` folder, add new file `nginx.conf`
    
-```json
+```
 worker_processes  1;
 
 events {
@@ -38,7 +38,7 @@ http {
     }
 }
 ```
-5. add new `Dockerfile` in `angular-ui` folder
+1. add new `Dockerfile` in `angular-ui` folder
 
 ```Dockerfile
 FROM nginx:alpine
