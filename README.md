@@ -1,4 +1,4 @@
-# Angular 7, .NET Core Web API with EF core,MSSQL server, VsCode, Azure DevOps CI/CD, Azure Container Service and Google Kubernetes Engine
+# Angular 7, .NET Core Web API with EF core,MSSQL server, VsCode, Azure DevOps CI/CD, Azure Container Service, Google Kubernetes Engine, Terraform
 
 This is a sample project showing the steps taken to develop a simple 3 tier application using Angular 7, .NET Core Web API with EF core and MSSQL server using open Open Source development tools (VsCode) using a Windows 10 Professional laptop. Azure DevOps is used to automate the CI/CD process and deploy to both Azure Kubernetes Service and Goolge Kubernetes Engine using Terraform
 
