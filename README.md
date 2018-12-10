@@ -3,8 +3,9 @@
 This is a sample project showing the steps taken to develop a simple 3 tier application using Angular 7, .NET Core Web API with EF core and MSSQL server using open Open Source development tools (VsCode) using a Windows 10 Professional laptop. Azure DevOps is used to automate the CI/CD process and deploy to both Azure Kubernetes Service and Goolge Kubernetes Engine using Terraform
 
 ## Step 1: Install Docker for Windows
-1. Install Docker for Windows at [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
-2. Run Docker in Linux mode
+1. Make sure you have Windows 10 Pro or Enterprise (Docker for Windows require Hyper-V)
+2. Install Docker for Windows at [https://docs.docker.com/docker-for-windows/install/](https://docs.docker.com/docker-for-windows/install/)
+3. Run Docker in Linux mode
 
 ## Step 2: Create Angular 7 docker container image
 1. install latest angular-cli using `npm i -g @angular/cli`
