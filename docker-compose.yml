@@ -12,7 +12,7 @@ services:
       - webapi
       - db
   webapi:
-    image: dotnetcoreapi
+    image: dotnetcore-webapi
     build: dotnetcore-webapi/.
     environment:
       ASPNETCORE_ENVIRONMENT: Production
@@ -27,4 +27,4 @@ services:
       ACCEPT_EULA: 'Y'
       MSSQL_PID: 'Express'
     ports:
-      - 9999:1433
+      - 1433:1433
