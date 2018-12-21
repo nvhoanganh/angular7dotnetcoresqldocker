@@ -1,8 +1,3 @@
-C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore-webapi.deps.json
-C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore-webapi.runtimeconfig.json
-C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore-webapi.runtimeconfig.dev.json
-C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore-webapi.dll
-C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore-webapi.pdb
 C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.csprojAssemblyReference.cache
 C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.csproj.CoreCompileInputs.cache
 C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.RazorAssemblyInfo.cache
@@ -10,5 +5,10 @@ C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\
 C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.AssemblyInfoInputs.cache
 C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.AssemblyInfo.cs
 C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.RazorTargetAssemblyInfo.cache
-C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.dll
-C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore-webapi.pdb
+C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore.webapi.deps.json
+C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore.webapi.runtimeconfig.json
+C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore.webapi.runtimeconfig.dev.json
+C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore.webapi.dll
+C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\bin\Debug\netcoreapp2.1\dotnetcore.webapi.pdb
+C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore.webapi.dll
+C:\AnthonyNguyenData\source\personal\learn\BackEnd\Docker\dotnetcore-webapi\obj\Debug\netcoreapp2.1\dotnetcore.webapi.pdb

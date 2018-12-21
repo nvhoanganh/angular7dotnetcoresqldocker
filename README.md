@@ -251,6 +251,7 @@ services:
 
 ## Step 6: Wiring up connections between containers
 
+Add AspnetCoreIdentity to the ASP.Net Core API
 ## Step 7: Add Kubernetes
 
 ## Step 8: Automate CI/CD using Azure DevOps
