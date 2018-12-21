@@ -37,6 +37,9 @@ namespace dotnetcore.webapi.Data
 			var adminUser = new ApplicationUser
 			{
 				UserName = "admin",
+				FirstName = "Admin",
+				LastName = "User",
+				Email = "admin@admin.com",
 				SecurityStamp = Guid.NewGuid().ToString(),
 			};
 			await manager.CreateAsync(adminUser, "admin");

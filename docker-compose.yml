@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   ui:
-    image: newangular7app
+    image: docker-demo-ui
     build: angular-ui/.
     environment:
       NODE_ENV: production
@@ -12,7 +12,7 @@ services:
       - webapi
       - db
   webapi:
-    image: dotnetcore-webapi
+    image: docker-demo-user-api
     build: dotnetcore-webapi/.
     environment:
       ASPNETCORE_ENVIRONMENT: Production
