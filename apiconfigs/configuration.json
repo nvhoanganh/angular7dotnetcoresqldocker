@@ -1,0 +1,19 @@
+﻿
+{
+    "ReRoutes": [
+      {
+        "DownstreamPathTemplate": "/api/{everything}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "webapi",
+            "Port": 80
+          }
+        ],
+        "UpstreamPathTemplate": "/api/u/{everything}",
+        "UpstreamHttpMethod": []
+      }
+    ],
+    "GlobalConfiguration": {
+    }
+  }

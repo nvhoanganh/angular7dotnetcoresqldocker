@@ -11,13 +11,29 @@ services:
     depends_on:
       - webapi
       - db
+
+  api-gateway:
+    image: apigw-base
+    build: api-gateway/.
+    # build: 
+    #   context: .
+    #   dockerfile: api-gateway/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    ports:
+      - 8080:80
+    depends_on:
+      - webapi
+    volumes:
+      - ./apiconfigs:/app/configuration
+
   webapi:
     image: docker-demo-user-api
     build: dotnetcore-webapi/.
     environment:
       ASPNETCORE_ENVIRONMENT: Production
-    ports:
-      - 8080:80
+    # ports:
+    #   - 8081:80
     depends_on:
       - db
   db:
@@ -26,5 +42,5 @@ services:
       SA_PASSWORD: 'Password1'
       ACCEPT_EULA: 'Y'
       MSSQL_PID: 'Express'
-    ports:
-      - 1433:1433
+    # ports:
+    #   - 1433:1433
