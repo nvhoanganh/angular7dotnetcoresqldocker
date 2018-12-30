@@ -71,7 +71,7 @@ spec:
   ports:
   - port: 80
     # this port is used so that we can hit the API directly
-    nodePort: 30002
+    # nodePort: 30002
     protocol: TCP
   selector:
     app: webapi
@@ -111,7 +111,7 @@ spec:
   type: NodePort
   ports:
   - port: 80
-    nodePort: 30003
+    # nodePort: 30003
     protocol: TCP
   selector:
     app: apigw
@@ -131,11 +131,11 @@ spec:
     metadata:
       labels:
         app: webui
-        version: "1"
+        version: "latest"
     spec:
       containers:
       - name: webui
-        image: nvhoanganh1909/docker-demo-ui:1
+        image: nvhoanganh1909/docker-demo-ui:latest
         env:
         - name: NODE_ENV
           value: "production"       
@@ -153,7 +153,30 @@ spec:
   ports:
   - port: 80
     # this port is used so that we can hit the API directly
-    nodePort: 30004
+    # nodePort: 30004
     protocol: TCP
   selector:
     app: webui
+
+# add Ingress
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # for dev
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api
+        backend:
+          serviceName: apigateway-svc
+          servicePort: 80
+      - path: /
+        backend:
+          serviceName: webui
+          servicePort: 80
