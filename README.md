@@ -242,7 +242,7 @@ services:
     environment:
       SA_PASSWORD: 'Password1'
       ACCEPT_EULA: 'Y'
-      MSSQL_PID: 'Express'
+      MSSQL_PID: 'Express'****
     ports:
       - 1433:1433
 
@@ -250,10 +250,63 @@ services:
 2. run `docker-compose up -d` again and you should see the start up order is now SQL > WebApi > UI
 
 ## Step 6: Wiring up connections between containers
+In this step, we will add a simple User management functionality to our system using ASP .NET Identity. 
+1. Add ASP .NET Identity using SQL [See Instructions](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&tabs=visual-studio)
+2. Add Data Seeder to create admin user
+3. Create `UsersController.cs` which expose CRUD REST endpoints at http://localhost/api/user
+4. Add OCELOT API gateway project which dynamically load OCELOT route configuration from `configuration.json` from `configuration` folder 
+```csharp
+public class Program
+	{
+		public static void Main(string[] args)
+		{
+			BuildWebHost(args).Run();
+		}
 
-Add AspnetCoreIdentity to the ASP.Net Core API
+		public static IWebHost BuildWebHost(string[] args)
+		{
+			IWebHostBuilder builder = WebHost.CreateDefaultBuilder(args);
+			builder.ConfigureServices(s => s.AddSingleton(builder))
+				.ConfigureAppConfiguration(ic => ic.AddJsonFile(Path.Combine("configuration", "configuration.json")))
+				.UseStartup<Startup>()
+				;
+			IWebHost host = builder.Build();
+			return host;
+		}
+	}
+}
+```
+5. Modify Angular UI which call the api gateway and return the list of users
+6. run `docker-compose up` and browse to http://localhost and make sure it is working
+7. run `docker-compose down` to tear down 
+
+## Step 7: Pushing images to Docker Hub
+1. Login to docker hub by running `docker login -u nvhoanganh1909`
+2. Tag the local image `docker tag f16 nvhoanganh1909/docker-demo-ui:latest` where `f16` is the first 3 characters of your image
+3. Push the newly tagged image `docker push nvhoanganh1909/docker-demo-ui:latest`
+4. Login to https://hub.docker.com/ and make sure you can see the new docker image
+   
 ## Step 7: Add Kubernetes
+1. From Docker for Windows Settings, turn on Kubernetes option
+2. Verify Kubenetes is running by running `kubectl cluster-info` command. You should see something like this
+
+```cmd
+Kubernetes master is running at https://localhost:6445
+Heapster is running at https://localhost:6445/api/v1/namespaces/kube-system/services/heapster/proxy
+KubeDNS is running at https://localhost:6445/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+monitoring-grafana is running at https://localhost:6445/api/v1/namespaces/kube-system/services/monitoring-grafana/proxy
+monitoring-influxdb is running at https://localhost:6445/api/v1/namespaces/kube-system/services/monitoring-influxdb/proxy
+```
+3. Create new K8s namespace ([k8s-namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)) by running `kubectl create namespace dev`
+4. Register user context by running `kubectl config set-context dev --namespace=dev --cluster=docker-for-desktop-cluster --user=docker-for-desktop`
+5. Switch to dev context `kubectl config use-context dev`
+6. Create resources defined in the `k8s.yml` in `dev` context by running `kubectl apply -f k8s.yml` 
+7. Run `kubectl get all` ande make sure all services and pods are running
+8. Browse http://localhost:30004/ and make sure you can see the app running
+9. At anytime you can run `kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all --namespace=dev` to remove all created resources in the dev namespace
 
 ## Step 8: Automate CI/CD using Azure DevOps
 
 ## Step 9: Deploy to Azure Container Service and Google Kubernetes Engine using Terraform
+
+https://www.hanselman.com/blog/HowToSetUpKubernetesOnWindows10WithDockerForWindowsAndRunASPNETCore.aspx

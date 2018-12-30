@@ -1,0 +1,159 @@
+# Create single pod using MSSQL server for linux image
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-pod
+  labels:
+    purpose: db
+spec:
+  containers:
+  - name: db-container
+    image: microsoft/mssql-server-linux
+    env:
+    - name: SA_PASSWORD
+      value: "Password1"
+    - name: ACCEPT_EULA
+      value: "Y"
+    - name: MSSQL_PID
+      value: "Express"
+
+# expose the DB as service with dns name of db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # this is the name we used in our Connection String
+  name: db
+  labels:
+    purpose: db
+spec:
+  type: NodePort
+  ports:
+  - port: 1433
+    protocol: TCP
+  selector:
+    purpose: db
+
+# Create deployment which run 2 instances of webapi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapi
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: webapi
+        version: latest
+    spec:
+      containers:
+      - name: webapi
+        image: nvhoanganh1909/docker-demo-user-api:latest
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+
+# create service for API, this will load balance request to http://webapi:80 to the 2 pods above        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapi
+  labels:
+    purpose: webapi
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    # this port is used so that we can hit the API directly
+    nodePort: 30002
+    protocol: TCP
+  selector:
+    app: webapi
+
+# create API gateway pod
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apigw-pod
+  labels:
+    app: apigw
+spec:
+  containers:
+  - name: apigateway
+    image: nvhoanganh1909/apigw-base
+    env:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: "Production"
+    volumeMounts:
+    - mountPath: /app/configuration
+      name: config-volume
+  volumes:
+  - name: config-volume
+    hostPath:
+      # directory location on host
+      path: /C/AnthonyNguyenData/source/personal/learn/BackEnd/Docker/apiconfigs
+      type: DirectoryOrCreate
+
+#expose the API gateway service
+---      
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigateway-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30003
+    protocol: TCP
+  selector:
+    app: apigw
+
+# Create UI
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webui
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: webui
+        version: "1"
+    spec:
+      containers:
+      - name: webui
+        image: nvhoanganh1909/docker-demo-ui:1
+        env:
+        - name: NODE_ENV
+          value: "production"       
+
+# create service for Webui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webui
+  labels:
+    purpose: webui
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    # this port is used so that we can hit the API directly
+    nodePort: 30004
+    protocol: TCP
+  selector:
+    app: webui

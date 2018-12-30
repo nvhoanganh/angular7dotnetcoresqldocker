@@ -2,8 +2,8 @@ version: '3.4'
 
 services:
   ui:
-    image: docker-demo-ui
-    build: angular-ui/.
+    image: nvhoanganh1909/docker-demo-ui
+    # build: angular-ui/.
     environment:
       NODE_ENV: production
     ports:
@@ -13,23 +13,23 @@ services:
       - db
 
   api-gateway:
-    image: apigw-base
-    build: api-gateway/.
-    # build: 
+    image:  nvhoanganh1909/apigw-base
+    # build: api-gateway/.
+    # # build: 
     #   context: .
     #   dockerfile: api-gateway/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Production
     ports:
-      - 8080:80
+      - 30003:80
     depends_on:
       - webapi
     volumes:
       - ./apiconfigs:/app/configuration
 
   webapi:
-    image: docker-demo-user-api
-    build: dotnetcore-webapi/.
+    image: nvhoanganh1909/docker-demo-user-api
+    # build: dotnetcore-webapi/.
     environment:
       ASPNETCORE_ENVIRONMENT: Production
     # ports:
