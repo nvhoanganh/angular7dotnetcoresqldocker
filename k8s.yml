@@ -16,7 +16,7 @@ spec:
       value: "Y"
     - name: MSSQL_PID
       value: "Express"
-
+      
 # expose the DB as service with dns name of db
 ---
 apiVersion: v1
@@ -44,7 +44,13 @@ spec:
   selector:
     matchLabels:
       app: webapi
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 2
   template:
     metadata:
       labels:
@@ -96,10 +102,8 @@ spec:
       name: config-volume
   volumes:
   - name: config-volume
-    hostPath:
-      # directory location on host
-      path: /C/AnthonyNguyenData/source/personal/learn/BackEnd/Docker/apiconfigs
-      type: DirectoryOrCreate
+    configMap:
+      name: apigwconfig
 
 #expose the API gateway service
 ---      
@@ -127,6 +131,12 @@ spec:
     matchLabels:
       app: webui
   replicas: 2 # tells deployment to run 2 pods matching the template
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
   template:
     metadata:
       labels:

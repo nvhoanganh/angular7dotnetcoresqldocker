@@ -86,16 +86,24 @@ monitoring-influxdb is running at https://localhost:6445/api/v1/namespaces/kube-
 3. Create new K8s namespace ([k8s-namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)) by running `kubectl create namespace dev`
 4. Register user context by running `kubectl config set-context dev --namespace=dev --cluster=docker-for-desktop-cluster --user=docker-for-desktop`
 5. Switch to dev context `kubectl config use-context dev`
-6. Create resources defined in the `k8s.yml` in `dev` context by running `kubectl apply -f k8s.yml` 
-7. Run `kubectl get all` ande make sure all services and pods are running
-8. Browse http://localhost:30004/ and make sure you can see the app running
-9. At anytime you can run `kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all --namespace=dev` to remove all created resources in the dev namespace
-10. Install `nginx ingress` by running `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` then run `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml`
-11. 
+6. Create ConfigMap `kubectl.exe create configmap apigwconfig --from-file=./apiconfigs/configuration.json`
+7. Create resources defined in the `k8s.yml` in `dev` context by running `kubectl apply -f k8s.yml --record` 
+8. Run `kubectl get all` ande make sure all services and pods are running
+9.  Browse http://localhost:30004/ and make sure you can see the app running
+10. At anytime you can run `kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all --namespace=dev` to remove all created resources in the dev namespace
+11. Install `nginx ingress` by running `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml` then run `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml`
+12. 
 
+**Notes**:
+- get current rollout update status `kubectl.exe rollout status deployments webui-deployment`
+- get Deployment history  `kubectl.exe rollout history deployments webui-deployment`
+- check current deployment details `kubectl.exe describe deploy webui-deployment`
+- to roll back `kubectl.exe rollout undo deployment webui-deployment --to-revision=1`
+- run Bash command inside a pod `kubectl.exe exec apigw-pod -i -t -- bash`
 
 ## Step 8: Automate CI/CD using Azure DevOps
 
 ## Step 9: Deploy to Azure Container Service and Google Kubernetes Engine using Terraform
 
 https://www.hanselman.com/blog/HowToSetUpKubernetesOnWindows10WithDockerForWindowsAndRunASPNETCore.aspx
+
